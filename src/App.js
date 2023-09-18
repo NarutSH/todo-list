@@ -1,25 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import { Box, Container, Typography } from "@mui/material";
+import React, { useState } from "react";
+import Form from "./components/Form";
+import TaskIcon from "@mui/icons-material/Task";
+import PostContainer from "./components/PostContainer";
 
-function App() {
+const App = () => {
+  const [posts, setPosts] = useState([]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <Box
+        sx={{
+          height: "70vh",
+          overflowY: "auto",
+        }}
+      >
+        {posts.length ? (
+          <PostContainer posts={posts} />
+        ) : (
+          <Box
+            height="70vh"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            backgroundColor="white"
+          >
+            <Box textAlign="center">
+              <TaskIcon
+                sx={{
+                  fontSize: "50px",
+                }}
+              />
+              <Box>
+                <Typography>กรุณาเพิ่มข้อมูล</Typography>
+              </Box>
+            </Box>
+          </Box>
+        )}
+      </Box>
+
+      <Form posts={posts} setPosts={setPosts} />
+    </Container>
   );
-}
+};
 
 export default App;
