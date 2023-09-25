@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
+import { BrowserRouter } from "react-router-dom";
 
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -9,8 +10,10 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <App />
-    </LocalizationProvider>
+    <BrowserRouter>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <App />
+      </LocalizationProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );

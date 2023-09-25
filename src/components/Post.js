@@ -1,29 +1,22 @@
-import { Card, CardContent, Grid, IconButton } from "@mui/material";
+import { Card, CardContent, Checkbox, Grid, IconButton } from "@mui/material";
 import React from "react";
 import { format } from "date-fns";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
-const Post = ({ post }) => {
-  //   const dateTime = new Date(post.dateTime);
-  //   const date = dateTime.getDate();
-  //   const month = dateTime.getMonth();
-  //   const year = dateTime.getFullYear();
-
-  //   const hour = dateTime.getHours();
-  //   const minute = dateTime.getMinutes();
-
+const Post = ({ post, postIndex }) => {
   return (
     <Card>
       <CardContent>
         <Grid container spacing={2}>
           <Grid item xs={1}>
-            {format(new Date(post.dateTime), "HH:mm")}
+            {/* {postIndex + 1} */}
+            {post.id}
           </Grid>
           <Grid item xs={2}>
-            {format(new Date(post.dateTime), "dd  MMMM  yyyy")}
+            <Checkbox checked={post.completed} />
           </Grid>
           <Grid item xs={8}>
-            {post.content}
+            {post.todo}
           </Grid>
           <Grid item xs={1}>
             <IconButton>

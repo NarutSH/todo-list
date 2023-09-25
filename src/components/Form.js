@@ -42,13 +42,13 @@ const Form = ({ posts, setPosts }) => {
           <CardContent>
             <Grid container>
               <Grid item xs={3}>
-                <DateTimePicker
+                {/* <DateTimePicker
                   label="วันที่ - เวลา"
                   value={dateTime}
                   onChange={(date) => {
                     setDateTime(date);
                   }}
-                />
+                /> */}
               </Grid>
               <Grid item xs={9}>
                 <TextField
