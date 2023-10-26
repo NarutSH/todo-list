@@ -14,28 +14,24 @@ import axios from "axios";
 
 const Todo = () => {
   const [posts, setPosts] = useState([]);
-  const [totalPost, setTotalPost] = useState(0);
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+
+  const totalValue = posts.reduce((total, item) => {
+    return total + +item.title;
+  }, 0);
+
+  console.log("totalValue", totalValue);
 
   const getData = async () => {
-    const skip = (page - 1) * limit;
-
-    const url = `https://dummyjson.com/todos?limit=${limit}&skip=${skip}`;
-
-    // const response = await fetch(url);
-    // const responseJon = await response.json();
-    // console.log(responseJon);
+    const url = "http://localhost:8000/todos";
 
     const response = await axios.get(url);
 
-    setTotalPost(response.data.total);
-    setPosts(response.data.todos);
+    setPosts(response.data.data);
   };
 
   useEffect(() => {
     getData();
-  }, [page]);
+  }, []);
 
   return (
     <Container>
@@ -45,8 +41,12 @@ const Todo = () => {
           overflowY: "auto",
         }}
       >
+        <Card sx={{ marginBottom: "20px" }}>
+          <CardContent>จำนวนรวม : {totalValue}</CardContent>
+        </Card>
+
         {posts.length ? (
-          <PostContainer posts={posts} />
+          <PostContainer posts={posts} callbackFn={getData} />
         ) : (
           <Box
             height="70vh"
@@ -68,22 +68,8 @@ const Todo = () => {
           </Box>
         )}
       </Box>
-      <Box marginTop="10px">
-        <Card>
-          <CardContent>
-            <Box display="flex" justifyContent="end" alignItems="center">
-              <Pagination
-                count={Math.ceil(totalPost / limit)}
-                onChange={(_, newPage) => {
-                  setPage(newPage);
-                }}
-              />
-            </Box>
-          </CardContent>
-        </Card>
-      </Box>
 
-      <Form posts={posts} setPosts={setPosts} />
+      <Form posts={posts} setPosts={setPosts} callbackFn={getData} />
     </Container>
   );
 };
