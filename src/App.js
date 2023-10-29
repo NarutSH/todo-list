@@ -1,46 +1,35 @@
-import { Box, Container, Typography } from "@mui/material";
-import React, { useState } from "react";
-import Form from "./components/Form";
-import TaskIcon from "@mui/icons-material/Task";
-import PostContainer from "./components/PostContainer";
+import { Box } from "@mui/material";
+import React from "react";
+import { Link, Route, Routes } from "react-router-dom";
+import Contact from "./pages/Contact";
+import ContactPerson from "./pages/ContactPerson";
+import Home from "./pages/Home";
+import Todo from "./pages/Todo";
 
 const App = () => {
-  const [posts, setPosts] = useState([]);
-
   return (
-    <Container>
+    <div>
       <Box
         sx={{
-          height: "70vh",
-          overflowY: "auto",
+          width: "100%",
+          background: "#88B7DD",
+          padding: "20px",
+          display: "flex",
+          gap: "10px",
         }}
       >
-        {posts.length ? (
-          <PostContainer posts={posts} />
-        ) : (
-          <Box
-            height="70vh"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            backgroundColor="white"
-          >
-            <Box textAlign="center">
-              <TaskIcon
-                sx={{
-                  fontSize: "50px",
-                }}
-              />
-              <Box>
-                <Typography>กรุณาเพิ่มข้อมูล</Typography>
-              </Box>
-            </Box>
-          </Box>
-        )}
+        <Link to="/">Home</Link>
+        <Link to="/todo">Todo</Link>
+        <Link to="/contact">Contact</Link>
       </Box>
 
-      <Form posts={posts} setPosts={setPosts} />
-    </Container>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/todo" element={<Todo />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/contact/:personId" element={<ContactPerson />} />
+      </Routes>
+    </div>
   );
 };
 

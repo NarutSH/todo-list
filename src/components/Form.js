@@ -10,24 +10,25 @@ import {
 import React, { useState } from "react";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 
-const Form = ({ posts, setPosts }) => {
+const Form = ({ posts, setPosts, callbackFn }) => {
   const [dateTime, setDateTime] = useState(new Date());
   const [textInput, setTextInput] = useState("");
 
-  const onHandleSubmit = (event) => {
+  const onHandleSubmit = async (event) => {
     event.preventDefault();
 
-    const post = {
-      id: uuidv4(),
-      dateTime: dateTime,
-      content: textInput,
+    const data = {
+      title: textInput,
+      isChecked: false,
     };
 
-    setPosts([...posts, post]);
+    await axios.post("http://localhost:8000/todos", data);
+
+    callbackFn();
 
     setTextInput("");
-    setDateTime(new Date());
   };
 
   const onReset = () => {
@@ -41,16 +42,7 @@ const Form = ({ posts, setPosts }) => {
         <form onSubmit={onHandleSubmit}>
           <CardContent>
             <Grid container>
-              <Grid item xs={3}>
-                <DateTimePicker
-                  label="วันที่ - เวลา"
-                  value={dateTime}
-                  onChange={(date) => {
-                    setDateTime(date);
-                  }}
-                />
-              </Grid>
-              <Grid item xs={9}>
+              <Grid item xs={12}>
                 <TextField
                   fullWidth
                   value={textInput}
